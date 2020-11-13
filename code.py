@@ -1,14 +1,22 @@
+#Import libraries
 import json
 import requests
+
 #sort the list of tuples in descending order
 def Sort_Tuple(repo_fork):   
     repo_fork.sort(key = lambda x: x[1],reverse=True)  
     return repo_fork 
+
 #inputs
+#Organisation name
 orgname = input("Enter the Organisation name:")
+#Number of popular repositories
 number_of_repo = int(input("Enter number of popular repositories:"))
+#Number of popular committees
 number_of_committees = int(input("Enter number of popular committees:"))
+
 repo_fork=[]
+
 for i in range(1,20):
     params = {'page': i, 'per_page':100}
     r = requests.get('https://api.github.com/orgs/'+orgname+'/repos', params=params)
@@ -17,7 +25,9 @@ for i in range(1,20):
     if(len(repo_fork)<i*100):
         break
 Sort_Tuple(repo_fork)
+
 k=1
+
 for i in repo_fork[0:number_of_repo]:
     print("Repository number:",k,i[0]," ","Fork counts:",i[1])
     k+=1
